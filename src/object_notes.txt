@@ -1,0 +1,41 @@
+Booleans => true | false
+Numbers => integer | real
+Strings => (characters)
+            (multi \
+            line string)
+Escape sequences: \n, \r, \t, \b, \f, \\, \(, \), \ddd
+
+Names: /Sequence_of_chars
+
+Arrays: [items (that may or may not) \Be_the_same_type]
+
+Dictionaries:   <<
+                /Type /Example /Key value /Key2 (value2)
+                >>
+                *Keys MUST be Names*
+
+                /Type specifies the type of object the dictionary represents
+                    Its value is always a name. /Subtype may be used to 
+                    specify a specialization of a particular type. Eg: 
+                    /Type = /Font and /Subtype = /Type1, MMType1, Type3 or TrueType
+
+Null: null
+
+Stream attributes:
+    Key: Length, Type: integer (required)
+    Key: Filter, Type: Name or array of names (optional)
+    Key: DecodeParms, Type: variable (optional)
+
+Filters:
+    ASCIIHexDecode
+    ASCII85Decode
+    LZWDeocde
+    RunLengthDecode
+    CCITTFaxDecode
+    DCTDecode
+
+Trailer attributes:
+    Key: Size, Type: integer (required)
+    Key: Prev, Type: integer (present if that file has more than one CRT)
+    Key: Root, Type: Dictionary (Required)
+    Key: Info, Type: Dictionary (Optional)

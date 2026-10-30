@@ -58,6 +58,15 @@ namespace pdfpp {
         CCITTFaxDecode,     //Optional Dictionary
         DCTDecode           //Optional Dictionary
     };
+
+    struct ID {
+        uint32_t objectNum;
+        uint32_t generationNum;
+    };
+
+    struct IndirectObj {
+        
+    };
 }
 
 #endif

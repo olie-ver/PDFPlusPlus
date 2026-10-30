@@ -1,0 +1,52 @@
+Chapter 6 (p. 50) holds all notes on PDF document structure
+
+Catalog (p. 50):
+    Root node of the document
+    Is a Dictionary
+
+Catalog attributes:
+    Key: Type, Type: Name (Required, always Catalog)
+    Key: Pages, Type: Dictionary (Required)
+    Key: Outlines, Type: Dictionary (Required if the document has an outline)
+    Key: PageMode, Type: Name (Optional)
+
+PageMode:   UseNone, UseOutlines, UseThumbs (default is UseNone)
+
+Pages Tree: 
+    Dictionary 
+
+Pages Tree attributes:
+    Key: Type, Type: Name (Required, always Pages)
+    Key: Kids, Type: Array (Required)
+    Key: Count, Type: integer
+    Key: Parent, Type: Dictionary
+
+Page:
+    Dictionary
+
+Pages attributes:
+    Key: Type, Type: Name (Required, always Page)
+    Key: MediaBox, Type: Array (required)
+    Key: Parent, Type: Dictionary (required)
+    Key: Resources, Type: Dictionary (required if the page has resources)
+    Key: Contents, Type: Stream or Array (optional)
+    Key: CropBox, Type: Array (optional)
+    Key: Rotate, Type: integer (optional, must be a multiple of 90)
+    Key: Thumb, Type: Stream (optional)
+    Key: Annots, Type: Array (optional)
+
+Pages inherit: CropBox, MediaBox, Resources, and Rotate from their parents
+
+Text annoation attributes:
+Key: Type, Type: Name (required, always Annot)
+Key: Subtype, Type: Name (required, always Text)
+Key: Rect, Type: array of integers (Required)
+Key: Contents, Type: string (required)
+Key: Open, Type: boolean (optional, true => the annotation should be displayed opened, default is false)
+
+Link annotation attributes:
+Key: Type, Type: Name (required, always Annot)
+Key: Subtype, Type: Name (required, always Link)
+Key: Rect, Type: array of integers (Required)
+Key: Dest, Type: array (the view to go to)
+Key: Border, Type: Array of numbers (optional)

@@ -1,0 +1,62 @@
+Stream (p. 29) =>   <dictionary>
+                    stream
+                    {Lines of characters}
+                    endstream
+
+Indirect object (p. 38) =>  <object ID>
+                            <direct object>
+                            endobj
+
+Object ID (p. 38) =>    <object number>
+                        <generation number>
+                        obj
+
+Object number => 10 digit number, padded with 0's if needed
+Generation number => 5 digit number, padded with 0's if needed
+
+Indirect Reference (p. 39) =>   <object number>
+                                <generation number>
+                                R
+
+Header (p. 42) =>   <PDF version>
+
+Cross reference section =>  xref
+                            <cross reference subsections>
+
+Cross reference subsection =>   <object number of first entry in subsection>
+                                <number of entries in subsection>
+                                <cross-reference entries>
+
+Cross reference entry =>    <in use entry> | <free entry>
+
+In use entry => <byte offset> <generation number> n
+
+Free entry =>   <object number of next free object> <generation number> f
+
+Trailer (p. 46) =>  trailer 
+                    <<
+                    <trailer key-value pairs>
+                    >>
+                    startxref
+                    <cross reference table start address>
+                    %%EOF
+
+PDF Update (p. 47) =>   <body>
+                        <cross reference section>
+                        <trailer>
+
+Path (p. 97) => <subpaths>
+                {path clipping operator}
+                <path painting operator>
+
+Subpath =>  m <path segment operator except m and re> | re
+
+Text object =>  BT 
+                <text operator or graphics state operator>*
+                ET
+
+In-line image =>    BI
+                    <image-resource key-value pairs>
+                    ID
+                    {lines of data}
+                    EI

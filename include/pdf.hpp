@@ -3,6 +3,9 @@
 #ifndef PDFPP_H
 #define PDFPP_H
 
+//PDFs since version 1.5 do not need the trailer keyword: https://community.adobe.com/questions-9/check-the-presence-of-header-body-and-trailer-in-pdfs-1265955
+//For now we will say that it needs a trailer because this obviously can't handle streams
+
 #include "trailer.hpp"
 
 #include <array>
@@ -19,9 +22,6 @@
 
 #define BUFFERSIZE 1024UL
 
-//PDFs since version 1.5 do not need the trailer keyword: https://community.adobe.com/questions-9/check-the-presence-of-header-body-and-trailer-in-pdfs-1265955
-//For now we will say that it needs a trailer because this obviously can't handle streams
-
 namespace pdfpp {
     /// @brief Keywords
     inline static constinit std::array<char, 8> kw_trailer = std::to_array(TRAILER);
@@ -34,13 +34,11 @@ namespace pdfpp {
 
             size_t CRT;
         private:
-            void parseTrailer(size_t start);
-
 
             /// @brief An istream the pdf file
             std::ifstream file;
-
             const size_t fileSize;
+            std::filesystem::path path;
 
             std::string buffer;
 
