@@ -19,6 +19,7 @@ namespace pdfpp {
         constexpr size_t overlap = kw_startxref.size() - 1;
 
         size_t xrefOffset = 0;
+        size_t startXrefPos = 0; //the begin of where we see "startxref"
         bool found = false;
 
         while (!found) {
@@ -36,7 +37,7 @@ namespace pdfpp {
             } else {
                 found = true;
                 size_t chunkStart = fileSize - xrefOffset - seekBack;
-                size_t startXrefPos = chunkStart + findPos;
+                startXrefPos = chunkStart + findPos;
 
                 file.seekg(startXrefPos, std::ios::beg);
                 size_t finalRead = std::min(fileSize - startXrefPos, BUFFERSIZE);
@@ -45,13 +46,33 @@ namespace pdfpp {
             }
         }
 
+        size_t crt_start = 0;
         //Now that we have startxref, the CRT start, and %%EOF, we can now tokenize it
-        const std::vector<std::string>& tokens = util::split(buffer, " ");
+        const std::vector<std::string>& tokens = util::split(buffer);
         for (size_t i = 0; i < tokens.size(); i++) {
             if (tokens[i] == STARTXREF && tokens[i + 2] == PDF_EOF) {
-                size_t crt_start = std::stoi(tokens[i + 1]);
+                crt_start = std::stoi(tokens[i + 1]);
                 break;
             }
+        }
+
+        parseCRT(crt_start, startXrefPos);
+    }
+
+    void pdf::parseCRT(size_t crt_start, size_t startxrefPos) {
+        file.seekg(crt_start, std::ios::beg); //move the file to the start of the crt
+        size_t curPos = crt_start;
+        int i = 0;
+        while (curPos < startxrefPos) { //while we haven't gone past or met "startxref"
+            size_t bytesToRead = std::min(startxrefPos - curPos, BUFFERSIZE); //read in the maximum number of bytes without going past the file
+            buffer.resize(bytesToRead); //resize the buffer
+            file.read(buffer.data(), bytesToRead); //read in that many bytes
+
+            if (i == 0) {
+                std::cout << buffer << std::endl;
+                i++;
+            }
+            curPos += bytesToRead; //move the curPos by the amount of bytes we've read
         }
     }
 }

@@ -34,6 +34,7 @@ namespace pdfpp {
 
             size_t CRT;
         private:
+            void parseCRT(size_t crt_start, size_t startxrefPos);
 
             /// @brief An istream the pdf file
             std::ifstream file;

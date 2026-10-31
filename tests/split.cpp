@@ -8,7 +8,7 @@
 TEST(Util, Split) {
     std::string view = "The big brown dog jumps over the moon";
 
-    const std::vector<std::string>& tokens = pdfpp::util::split(view, " ");
+    const std::vector<std::string>& tokens = pdfpp::util::split(view);
 
     ASSERT_STR_EQ(tokens[0], "The");
     ASSERT_STR_EQ(tokens[1], "big");
