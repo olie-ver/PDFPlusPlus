@@ -12,9 +12,11 @@
 #include <filesystem>
 #include <fstream>
 #include <list>
+#include <unordered_map>
 
 #define PDF_EOF "%%EOF"
 #define STARTXREF "startxref"
+#define XREF "xref"
 #define TRAILER "trailer"
 #define DIGITS32 10
 #define DIGITS64 20
@@ -27,6 +29,7 @@ namespace pdfpp {
     inline static constinit std::array<char, 8> kw_trailer = std::to_array(TRAILER);
     inline static constinit std::array<char, 6> kw_eof = std::to_array(PDF_EOF);
     inline static constinit std::array<char, 10> kw_startxref = std::to_array(STARTXREF);
+    inline static constinit std::array<char, 5> kw_xref = std::to_array(XREF);
 
     class pdf {
         public:
@@ -46,6 +49,8 @@ namespace pdfpp {
             /// @brief a list of trailers in the pdf file with the first entry being the most recent and the 
             //  last entry being the least recent entry in the file
             std::list<trailer> entries;
+
+            //I need an unordered_map from object IDs to actual objects
     };
 }
 

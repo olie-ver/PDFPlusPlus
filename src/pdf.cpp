@@ -62,17 +62,36 @@ namespace pdfpp {
     void pdf::parseCRT(size_t crt_start, size_t startxrefPos) {
         file.seekg(crt_start, std::ios::beg); //move the file to the start of the crt
         size_t curPos = crt_start;
-        int i = 0;
         while (curPos < startxrefPos) { //while we haven't gone past or met "startxref"
             size_t bytesToRead = std::min(startxrefPos - curPos, BUFFERSIZE); //read in the maximum number of bytes without going past the file
             buffer.resize(bytesToRead); //resize the buffer
             file.read(buffer.data(), bytesToRead); //read in that many bytes
-
-            if (i == 0) {
-                std::cout << buffer << std::endl;
-                i++;
-            }
             curPos += bytesToRead; //move the curPos by the amount of bytes we've read
+
+            std::vector<std::string> tokens = util::split(buffer);
+
+            size_t firstEntryNum;
+            size_t numEntries;
+            bool parsingEntries = false;
+            for (size_t i = 0; i < tokens.size(); i++) {
+                if (tokens[i] == XREF) {
+                    firstEntryNum = std::stoi(tokens[++i]);
+                    numEntries = std::stoi(tokens[++i]);
+                    parsingEntries = true;
+                }
+
+                if (parsingEntries) {
+                    //if there are less than three tokens
+                    if (i >= tokens.size() - 3) {
+                        //move the file backwards by the amount of characters in 1 line
+                        //read in as many bytes as allowed
+                        //adjust curPos
+                        //continue 
+                    }
+                }
+
+                //Each entry is: 10 digit number, 5 digit number, f or n
+            }
         }
     }
 }

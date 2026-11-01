@@ -63,10 +63,6 @@ namespace pdfpp {
         uint32_t objectNum;
         uint32_t generationNum;
     };
-
-    struct IndirectObj {
-        
-    };
 }
 
 #endif
